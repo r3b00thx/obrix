@@ -1,26 +1,47 @@
 {
-  "name": "obrix",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.30"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.30"
-  }
+    "name": "obrix",
+    "author": "r3b00thx",
+    "description": "A private, real-time communication app built with Next.js 14, React, and Prisma. It features a custom-built interface, RESTful API, and a passwordless authentication system using OTP codes and usernames. Designed for maximum privacy, control, and performance",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint && prettier --check .",
+        "format": "prettier --write . && npx eslint . --fix && npx prisma format",
+        "prisma": "npx prisma generate"
+    },
+    "dependencies": {
+        "@radix-ui/react-dropdown-menu": "^2.1.15",
+        "@radix-ui/react-slot": "^1.2.3",
+        "class-variance-authority": "^0.7.1",
+        "@prisma/client": "^5.13.0",
+        "lucide-react": "^0.522.0",
+        "next": "14.2.30",
+        "next-themes": "^0.4.6",
+        "react": "^18",
+        "react-dom": "^18",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+        "@prisma/client": "5.13.0",
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "@typescript-eslint/parser": "^8.24.1",
+        "clsx": "^2.1.1",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.23",
+        "eslint-plugin-tailwindcss": "^3.18.0",
+        "eslint-plugin-unused-imports": "^4.1.4",
+        "postcss": "^8",
+        "prettier": "^3.5.1",
+        "prettier-plugin-tailwindcss": "^0.6.11",
+        "prisma": "5.13.0",
+        "tailwind-merge": "^3.3.1",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5"
+    }
 }
