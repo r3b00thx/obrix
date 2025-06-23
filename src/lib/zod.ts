@@ -14,7 +14,7 @@ const OTP = z
     .min(6, { message: "OTP must be at least 6 characters long." })
     .max(6, { message: "OTP must not exceed 6 characters." });
 
-const UUID = z.string().trim().uuid().optional();
+const Uuid = z.string().trim().uuid().optional();
 
 const Image = z
     .instanceof(File)
@@ -25,19 +25,19 @@ const Image = z
 const Content = z
     .string()
     .trim()
-    .min(1, "Message must be at least 1 characters long.")
+    .min(6, "Message must be at least 6 characters long.")
     .max(2600, "Message must not exceed 2600 characters (max 2600 characters).");
 
 const Description = z
     .string()
     .trim()
-    .min(1, "Description must be at least 1 characters long.")
-    .max(50, "Description must not exceed 50 characters (max 50 characters).");
+    .min(3, "Description must be at least 3 characters long.")
+    .max(12, "Description must not exceed 12 characters (max 12 characters).");
 
 const Bio = z
     .string()
     .trim()
-    .min(1, "Bio must be at least 1 characters long.")
+    .min(3, "Bio must be at least 3 characters long.")
     .max(50, "Bio must not exceed 50 characters (max 50 characters).");
 
 const TextType = z.enum(["text", "image", "file", "gif"]).default("text");
@@ -47,20 +47,20 @@ const ChannelType = z.enum(["text", "voice", "announcement"]);
 const Title = z
     .string()
     .trim()
-    .min(1, "Title must be at least 1 characters long.")
+    .min(3, "Title must be at least 3 characters long.")
     .max(16, "Title must not exceed 16 characters");
 
 const Tag = z
     .string()
     .trim()
-    .min(1, "Tag must be at least 1 characters long.")
+    .min(3, "Tag must be at least 3 characters long.")
     .max(6, "Tag must not exceed 16 characters")
     .startsWith("#");
 
 const Name = z
     .string()
     .trim()
-    .min(1, "Name must be at least 1 characters long.")
+    .min(3, "Name must be at least 3 characters long.")
     .max(16, "Name must not exceed 16 characters");
 
 const Theme = z.enum(["light", "dark", "system"]).default("system");
@@ -79,19 +79,19 @@ export const LoginSchema = z.object({
 
 // INFO: bio - Short user biography or status message (max 50 characters)
 export const UserSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     image: Image,
     username: Username,
     nickname: Name,
     bio: Bio,
-    role: z.array(z.string()),
+    role: Name,
     otp: OTP,
     servers: z.object({
-        uuid: UUID,
+        uuid: Uuid,
     }),
     blockedUsers: z.array(
         z.object({
-            uuid: UUID,
+            uuid: Uuid,
         })
     ),
 });
@@ -106,25 +106,25 @@ export const UserSettingSchema = z.object({
 
 // INFO: Permission status indicates whether a permission is explicitly allowed, denied, or neutral (inherits default or parent settings)
 export const RoleSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     name: Name,
     color: z.string(),
     staff: z.boolean().default(false),
-    permission: z.array(
+    permissions: z.array(
         z.object({
             name: Name,
-            status: Name,
+            action: Name,
         })
     ),
 });
 
 export const MessageSchema = z.object({
-    uuid: UUID,
-    senderUuid: UUID,
-    channelUuid: UUID,
+    uuid: Uuid,
+    senderUUID: Uuid,
+    channelUUID: Uuid,
     content: Content,
     type: TextType,
-    replyTo: UUID,
+    replyTo: Uuid,
     image: Image,
     pinned: z.boolean().default(false),
     edited: z.boolean().default(false),
@@ -132,8 +132,8 @@ export const MessageSchema = z.object({
 
 // INFO: Custom tag set by you to label your server as you want
 export const ServerSchema = z.object({
-    uuid: UUID,
-    ownerUuid: UUID,
+    uuid: Uuid,
+    ownerUUID: Uuid,
     public: z.boolean().default(false),
     Icon: Image,
     banner: Image,
@@ -144,46 +144,61 @@ export const ServerSchema = z.object({
 });
 
 export const RuleSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     title: Title,
     content: Content,
 });
 
-// INFO: Language setting for the server
+// INFO: sets the interface and system message language for the entire server.
 export const SettingSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     allowInvites: z.boolean().default(false),
     language: Language,
 });
-
+// INFO: IpBanned sets the IPs of the banned member.
 export const MemberSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     banned: z.boolean().default(false),
-    ipBanned: z.array(z.string()),
+    ipBanned: z.array(z.string()).optional(),
     role: z.array(z.string()),
 });
 
 export const ServerRoleSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     name: Name,
     color: z.string(),
-    permission: z.array(z.string()),
+    permissions: z.array(
+        z.object({
+            name: Name,
+            action: Name,
+        })
+    ),
 });
 
-// INFO: Sets the type of the channel (e.g., text, voice, announcement)
+// INFO: type Sets the type of the channel (e.g., text, voice, announcement)
 export const ChannelSchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     title: Title,
     description: Description,
     category: Title,
     role: z.array(z.string()),
     type: ChannelType,
-    permission: z.array(z.string()),
+    permissions: z.array(
+        z.object({
+            name: Name,
+            action: Name,
+        })
+    ),
 });
 
 export const CategorySchema = z.object({
-    uuid: UUID,
+    uuid: Uuid,
     title: Title,
     channels: z.array(z.string()),
-    permission: z.array(z.string()),
+    permissions: z.array(
+        z.object({
+            name: Name,
+            action: Name,
+        })
+    ),
 });
