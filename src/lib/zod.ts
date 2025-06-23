@@ -84,7 +84,7 @@ export const UserSchema = z.object({
     username: Username,
     nickname: Name,
     bio: Bio,
-    role : z.array(z.string()),
+    role: z.array(z.string()),
     otp: OTP,
     servers: z.object({
         uuid: UUID,
@@ -139,7 +139,7 @@ export const ServerSchema = z.object({
     banner: Image,
     title: Title,
     description: Description,
-    inviteCode:  z.array(z.string().regex(/^[a-zA-Z0-9_-]{6,32}$/, "Invalid invite code.")),
+    inviteCode: z.array(z.string().regex(/^[a-zA-Z0-9_-]{6,32}$/, "Invalid invite code.")),
     tag: Tag,
 });
 
