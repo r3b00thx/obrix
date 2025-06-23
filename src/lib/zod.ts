@@ -11,9 +11,7 @@ const username = z
     .min(4, { message: "Username must be at least 4 characters long." })
     .max(16, { message: "Username must not exceed 16 characters." });
 
-const otp = z
-    .string()
-    .length(6, { message: "OTP must be a 6-digit number." });
+const otp = z.string().length(6, { message: "OTP must be a 6-digit number." });
 
 const image = z
     .instanceof(File)
@@ -106,10 +104,12 @@ export const UserSettingSchema = z.object({
     notification: z.boolean().default(false),
 });
 
-const permissions = z.array(z.object({
-    name,
-    action,
-}));
+const permissions = z.array(
+    z.object({
+        name,
+        action,
+    })
+);
 
 // INFO: Permission status indicates whether a permission is explicitly allowed, denied, or neutral (inherits default or parent settings)
 export const RoleSchema = z.object({
