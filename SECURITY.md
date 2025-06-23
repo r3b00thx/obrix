@@ -5,7 +5,7 @@
 We aim to keep our project secure and up to date. The following table describes our support model:
 
 | Version | Supported |
-|---------|-----------|
+| ------- | --------- |
 | Latest  | ✅        |
 | Older   | ❌        |
 
@@ -21,10 +21,10 @@ Instead, follow these steps:
 
 1. **Email us directly** at: `team@obrix.dev`
 2. Provide as much detail as possible:
-   - Affected components or files
-   - Steps to reproduce
-   - Potential impact
-   - Suggested fix (if known)
+    - Affected components or files
+    - Steps to reproduce
+    - Potential impact
+    - Suggested fix (if known)
 
 We will respond to reports within **72 hours** and work with you to verify and patch the issue as quickly as possible.
 
