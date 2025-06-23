@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const uuid = z.string().trim().uuid().optional();
+const uuid = z.string().uuid({ message: "Invalid UUID format." }).optional();
 
 const username = z
     .string()
@@ -12,9 +12,8 @@ const username = z
     .max(16, { message: "Username must not exceed 16 characters." });
 
 const otp = z
-    .number()
-    .min(6, { message: "OTP must be a 6-digit number." })
-    .max(6, { message: "OTP must be a 6-digit number." });
+    .string()
+    .length(6, { message: "OTP must be a 6-digit number." });
 
 const image = z
     .instanceof(File)
@@ -22,6 +21,7 @@ const image = z
         message: "Only JPG or PNG images are allowed.",
     })
     .optional();
+
 const content = z
     .string()
     .trim()
@@ -38,11 +38,11 @@ const bio = z
     .string()
     .trim()
     .min(3, "Bio must be at least 3 characters long.")
-    .max(50, "Bio must not exceed 50 characters.");
+    .max(16, "Bio must not exceed 16 characters.");
 
-const TextType = z.enum(["text", "image", "file", "gif"]).default("text");
+const TextTypeEnum = z.enum(["text", "image", "file", "gif"]).default("text");
 
-const ChannelType = z.enum(["text", "voice", "announcement"]);
+const ChannelTypeEnum = z.enum(["text", "voice", "announcement"]);
 
 const title = z
     .string()
@@ -54,7 +54,7 @@ const Tag = z
     .string()
     .trim()
     .min(3, "Tag must be at least 3 characters long.")
-    .max(6, "Tag must not exceed 16 characters.")
+    .max(16, "Tag must not exceed 16 characters.")
     .startsWith("#");
 
 const name = z
@@ -106,18 +106,18 @@ export const UserSettingSchema = z.object({
     notification: z.boolean().default(false),
 });
 
+const permissions = z.array(z.object({
+    name,
+    action,
+}));
+
 // INFO: Permission status indicates whether a permission is explicitly allowed, denied, or neutral (inherits default or parent settings)
 export const RoleSchema = z.object({
     uuid,
     name,
     color: z.string(),
     staff: z.boolean().default(false),
-    permissions: z.array(
-        z.object({
-            name,
-            action,
-        })
-    ),
+    permissions,
 });
 
 export const MessageSchema = z.object({
@@ -125,8 +125,8 @@ export const MessageSchema = z.object({
     senderUUID: uuid,
     channelUUID: uuid,
     content,
-    type: TextType,
-    replyTo: uuid,
+    type: TextTypeEnum,
+    replyTo: uuid.optional(),
     image,
     pinned: z.boolean().default(false),
     edited: z.boolean().default(false),
@@ -170,12 +170,7 @@ export const ServerRoleSchema = z.object({
     uuid,
     name,
     color: z.string(),
-    permissions: z.array(
-        z.object({
-            name,
-            action,
-        })
-    ),
+    permissions,
 });
 
 // INFO: Type Sets the type of the channel (e.g., text, voice, announcement)
@@ -185,23 +180,13 @@ export const ChannelSchema = z.object({
     description,
     category: title,
     role: z.array(z.string()),
-    type: ChannelType,
-    permissions: z.array(
-        z.object({
-            name,
-            action,
-        })
-    ),
+    type: ChannelTypeEnum,
+    permissions,
 });
 
 export const CategorySchema = z.object({
     uuid,
     title,
     channels: z.array(z.string()),
-    permissions: z.array(
-        z.object({
-            name,
-            action,
-        })
-    ),
+    permissions,
 });
