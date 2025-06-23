@@ -67,7 +67,7 @@ const theme = z.enum(["light", "dark", "system"]).default("system");
 
 const language = z.enum(["en", "ro", "fr", "de"]).default("en");
 
-const action = z.enum(["deny", "none", "accept"]).default("none")
+const action = z.enum(["deny", "none", "accept"]).default("none");
 
 export const RegisterSchema = z.object({
     username,
