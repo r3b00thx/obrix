@@ -137,7 +137,7 @@ export const ServerSchema = z.object({
     uuid,
     ownerUUID: uuid,
     public: z.boolean().default(false),
-    Icon: image,
+    icon: image,
     banner: image,
     title,
     description,
