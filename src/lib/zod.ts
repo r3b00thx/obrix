@@ -77,16 +77,16 @@ export const LoginSchema = z.object({
     otp: OTP,
 });
 
-// Info: bio - Short user biography or status message (max 50 characters)
+// INFO: bio - Short user biography or status message (max 50 characters)
 export const UserSchema = z.object({
     uuid: UUID,
-    ip: z.array(z.string()),
     image: Image,
     username: Username,
     nickname: Name,
     bio: Bio,
+    role : z.array(z.string()),
     otp: OTP,
-    server: z.object({
+    servers: z.object({
         uuid: UUID,
     }),
     blockedUsers: z.array(
@@ -96,7 +96,7 @@ export const UserSchema = z.object({
     ),
 });
 
-// Info: Activity controls whether the user's current activity (e.g., game or app usage) is visible to others
+// INFO: Activity controls whether the user's current activity (e.g., game or app usage) is visible to others
 export const UserSettingSchema = z.object({
     theme: Theme,
     language: Language,
@@ -104,7 +104,7 @@ export const UserSettingSchema = z.object({
     notification: z.boolean().default(false),
 });
 
-// Info: Permission status indicates whether a permission is explicitly allowed, denied, or neutral (inherits default or parent settings)
+// INFO: Permission status indicates whether a permission is explicitly allowed, denied, or neutral (inherits default or parent settings)
 export const RoleSchema = z.object({
     uuid: UUID,
     name: Name,
@@ -130,26 +130,28 @@ export const MessageSchema = z.object({
     edited: z.boolean().default(false),
 });
 
-// Info: Custom tag set by you to label your server as you want
+// INFO: Custom tag set by you to label your server as you want
 export const ServerSchema = z.object({
     uuid: UUID,
     ownerUuid: UUID,
     public: z.boolean().default(false),
-    image: Image,
+    Icon: Image,
     banner: Image,
     title: Title,
     description: Description,
-    inviteCode: z.string().regex(/^[a-zA-Z0-9_-]{6,32}$/, "Invalid invite code."),
+    inviteCode:  z.array(z.string().regex(/^[a-zA-Z0-9_-]{6,32}$/, "Invalid invite code.")),
     tag: Tag,
 });
 
 export const RuleSchema = z.object({
+    uuid: UUID,
     title: Title,
     content: Content,
 });
 
-// Info: Language setting for the server
+// INFO: Language setting for the server
 export const SettingSchema = z.object({
+    uuid: UUID,
     allowInvites: z.boolean().default(false),
     language: Language,
 });
@@ -161,20 +163,14 @@ export const MemberSchema = z.object({
     role: z.array(z.string()),
 });
 
-// Info: Permission status indicates whether a permission is explicitly allowed, denied, or neutral (inherits default or parent settings)
 export const ServerRoleSchema = z.object({
     uuid: UUID,
     name: Name,
     color: z.string(),
-    permission: z.array(
-        z.object({
-            name: Name,
-            status: Name,
-        })
-    ),
+    permission: z.array(z.string()),
 });
 
-// Info: Sets the type of the channel (e.g., text, voice, announcement)
+// INFO: Sets the type of the channel (e.g., text, voice, announcement)
 export const ChannelSchema = z.object({
     uuid: UUID,
     title: Title,
@@ -182,26 +178,12 @@ export const ChannelSchema = z.object({
     category: Title,
     role: z.array(z.string()),
     type: ChannelType,
-    permission: z.array(
-        z.object({
-            name: Name,
-            status: Name,
-        })
-    ),
+    permission: z.array(z.string()),
 });
 
 export const CategorySchema = z.object({
     uuid: UUID,
     title: Title,
-    channels: z.array(
-        z.object({
-            uuid: UUID,
-        })
-    ),
-    permission: z.array(
-        z.object({
-            name: Name,
-            status: Name,
-        })
-    ),
+    channels: z.array(z.string()),
+    permission: z.array(z.string()),
 });
