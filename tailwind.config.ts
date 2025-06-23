@@ -50,6 +50,12 @@ const config: Config = {
                     "4": "hsl(var(--chart-4))",
                     "5": "hsl(var(--chart-5))",
                 },
+                toast: {
+                    DEFAULT: "hsl(var(--toast))",
+                },
+                error: "hsl(var(--error))",
+                warning: "hsl(var(--warning))",
+                success: "hsl(var(--success))",
             },
             borderRadius: {
                 lg: "var(--radius)",
