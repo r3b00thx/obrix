@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
 
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({
             <body className={cn(inter.className, "bg-background antialiased")}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                     {children}
+                    <Toaster />
                 </ThemeProvider>
             </body>
         </html>
