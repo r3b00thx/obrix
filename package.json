@@ -6,7 +6,8 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build:next": "next build",
+        "build:docker": "docker build -t obrix-image .",
         "start": "next start",
         "lint": "next lint && prettier --check .",
         "format": "prettier --write . && npx eslint . --fix && npx prisma format",
