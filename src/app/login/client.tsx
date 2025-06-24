@@ -27,7 +27,7 @@ export default function LoginForm() {
         <>
             <Form {...loginForm}>
                 <form className="flex w-full max-w-md flex-col gap-6">
-                    <h1 className="text-4xl font-semibold text-center">Login</h1>
+                    <h1 className="text-center text-4xl font-semibold">Login</h1>
                     <FormField
                         control={loginForm.control}
                         name="username"
@@ -64,7 +64,7 @@ export default function LoginForm() {
                                                     <InputOTPSlot
                                                         key={i}
                                                         index={i}
-                                                        className="text-4xl size-14"
+                                                        className="size-14 text-4xl"
                                                     />
                                                 ))}
                                             </InputOTPGroup>
