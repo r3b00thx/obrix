@@ -1,3 +1,5 @@
+import Logo from "@/components/ui/logo";
+
 import LoginForm from "./client";
 
 export default function LoginPage() {
@@ -25,13 +27,18 @@ export default function LoginPage() {
                             y2="375.351"
                             gradientUnits="userSpaceOnUse">
                             <stop stopColor="#F97316" />
-                            <stop offset="1" stop-color="#93440D" />
+                            <stop offset="1" stopColor="#93440D" />
                         </linearGradient>
                     </defs>
                 </svg>
             </div>
             <div className="z-10 flex w-full items-center justify-center">
-                <LoginForm />
+                <div className="flex w-full flex-col-reverse items-center justify-center rounded-xl bg-card p-6 sm:mx-4 sm:w-full md:min-h-[50%] md:w-4/5 md:flex-row lg:w-1/2">
+                    <LoginForm />
+                    <div className="w-full py-6 sm:hidden md:flex md:w-1/2 md:justify-center">
+                        <Logo width={512} height={512} className="size-36 dark:fill-primary" />
+                    </div>
+                </div>
             </div>
         </main>
     );
