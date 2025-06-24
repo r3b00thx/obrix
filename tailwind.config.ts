@@ -9,12 +9,16 @@ const config: Config = {
     ],
     theme: {
         screens: {
-            sm: "320px",
+            xs: "320px",
+            sm: "640px",
             md: "768px",
             lg: "1024px",
-            xl: "1440px",
-            "1x1": "1910px",
-            "2x1": "2560px",
+            xl: "1280px",
+            "2xl": "1536px",
+            "3xl": "1792px",
+            "4xl": "2048px",
+            "5xl": "2560px",
+            ultra: "3072px",
         },
         extend: {
             colors: {

@@ -24,51 +24,63 @@ export default function LoginForm() {
     });
 
     return (
-        <Form {...loginForm}>
-            <form className="flex w-full max-w-md flex-col gap-6 md:w-1/2">
-                <h1 className="text-4xl sm:text-center">Login</h1>
-                <hr />
-                <FormField
-                    control={loginForm.control}
-                    name="username"
-                    render={({ field }) => (
-                        <FormItem className="">
-                            <FormLabel>Username</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Type your username" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Enter the username associated with your account.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={loginForm.control}
-                    name="otp"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>OTP</FormLabel>
-                            <FormControl>
-                                <InputOTP maxLength={6} {...field}>
-                                    <InputOTPGroup>
-                                        {[...Array(6)].map((_, i) => (
-                                            <InputOTPSlot key={i} index={i} />
-                                        ))}
-                                    </InputOTPGroup>
-                                </InputOTP>
-                            </FormControl>
-                            <FormDescription>
-                                Check your authentication app and enter the 6-digit code.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <Button type="submit">Login</Button>
-            </form>
-        </Form>
+        <>
+            <Form {...loginForm}>
+                <form className="flex w-full max-w-md flex-col gap-6">
+                    <h1 className="text-4xl font-semibold text-center">Login</h1>
+                    <FormField
+                        control={loginForm.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem className="">
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Type your username"
+                                        className="w-full"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    Enter the username associated with your account.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={loginForm.control}
+                        name="otp"
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className="flex w-full justify-center">
+                                    <FormLabel>One-Time Passcode</FormLabel>
+                                </div>
+                                <FormControl>
+                                    <div className="flex justify-center">
+                                        <InputOTP maxLength={6} {...field}>
+                                            <InputOTPGroup>
+                                                {[...Array(6)].map((_, i) => (
+                                                    <InputOTPSlot
+                                                        key={i}
+                                                        index={i}
+                                                        className="text-4xl size-14"
+                                                    />
+                                                ))}
+                                            </InputOTPGroup>
+                                        </InputOTP>
+                                    </div>
+                                </FormControl>
+                                <FormDescription>
+                                    Check your authentication app and enter the 6-digit code.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">Login</Button>
+                </form>
+            </Form>
+        </>
     );
 }

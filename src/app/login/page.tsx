@@ -1,17 +1,22 @@
-import Logo from "@/components/ui/logo";
+import Link from "next/link";
+import { FaGithub } from "react-icons/fa";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Logo } from "@/components/ui/logo";
+import { Separator } from "@/components/ui/separator";
 
 import LoginForm from "./client";
 
 export default function LoginPage() {
     return (
-        <main className="flex h-screen">
-            <div className="absolute z-0 flex h-screen w-full justify-end overflow-hidden">
+        <div className="relative flex items-center justify-center ">
+            <div className="relative flex w-screen justify-end">
                 <svg
                     width="1012"
                     height="1080"
                     viewBox="0 0 1012 1080"
                     fill="none"
-                    className="pointer-events-none"
+                    className="pointer-events-none max-h-[calc(100vh)] "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -32,14 +37,36 @@ export default function LoginPage() {
                     </defs>
                 </svg>
             </div>
-            <div className="z-10 flex w-full items-center justify-center">
-                <div className="flex w-full flex-col-reverse items-center justify-center rounded-xl bg-card p-6 sm:mx-4 sm:w-full md:min-h-[50%] md:w-4/5 md:flex-row lg:w-1/2">
-                    <LoginForm />
-                    <div className="w-full py-6 sm:hidden md:flex md:w-1/2 md:justify-center">
-                        <Logo width={512} height={512} className="size-36 dark:fill-primary" />
+            <Card className="absolute z-10 max-w-5xl shadow-2xl shadow-card md:w-full">
+                <CardContent className="p-8">
+                    <div className="flex gap-4">
+                        <div className="w-full">
+                            <LoginForm />
+                        </div>
+                        <Separator orientation="vertical" className="mx-6 hidden h-96 md:block " />
+                        <div className="hidden w-full flex-col items-center justify-center gap-4 py-6 md:flex">
+                            <Logo
+                                width={137.75}
+                                height={153}
+                                className="size-36 fill-primary shadow-2xl shadow-primary"
+                            />
+                            <p className="text-center text-sm text-muted-foreground ">
+                                A private, real-time communication app built with Next.js 14, React,
+                                and Prisma. Designed for maximum privacy, control, and
+                                performance.{" "}
+                            </p>
+                            <div className="flex">
+                                <Link
+                                    href={"https://github.com/r3b00thx/obrix"}
+                                    target="_blank"
+                                    className="flex items-center gap-2 transition-all hover:text-primary ">
+                                    <FaGithub /> Repository
+                                </Link>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </main>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
