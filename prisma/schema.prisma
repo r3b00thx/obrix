@@ -6,3 +6,135 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Server {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+
+  icon       String?
+  banned     String?
+  name       String
+  inviteLink String
+
+  ownerUUID String
+
+  members  Member[]
+  roles    Role[]
+  category Category[]
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Member {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+
+  userUUID   String
+  roleUUID   String
+  serverUUID String
+
+  user   User   @relation(fields: [userUUID], references: [uuid])
+  server Server @relation(fields: [serverUUID], references: [uuid])
+  role   Role   @relation(fields: [roleUUID], references: [uuid])
+}
+
+model Role {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid           String @unique @default(uuid())
+  serverUUID     String
+  permissionUUID String
+
+  name  String
+  color String
+
+  server     Server         @relation(fields: [serverUUID], references: [uuid])
+  permission RolePermission @relation(fields: [permissionUUID], references: [uuid])
+  member     Member[]
+}
+
+model RolePermission {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+
+  name   String
+  action String
+
+  role Role[]
+}
+
+model Category {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+
+  serverUUID     String
+  permissionUUID String
+
+  name       String
+  permission CategoryPermission @relation(fields: [permissionUUID], references: [uuid])
+
+  server   Server    @relation(fields: [serverUUID], references: [uuid])
+  channels Channel[]
+}
+
+model Channel {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+
+  categoryUUID   String
+  permissionUUID String
+
+  name       String
+  permission CategoryPermission @relation(fields: [permissionUUID], references: [uuid])
+  type       String
+
+  category Category @relation(fields: [categoryUUID], references: [uuid])
+}
+
+model CategoryPermission {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+
+  name      String
+  canView   Boolean @default(true)
+  canSend   Boolean @default(true)
+  canManage Boolean @default(false)
+  canDelete Boolean @default(false)
+
+  category Category[]
+  channel  Channel[]
+}
+
+model User {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid String @unique @default(uuid())
+  ipAddress   String
+
+  username    String
+  nickname    String?
+  description String?
+  status      String  @default("online")
+  otp         Int     @unique
+
+  session Session[]
+  member  Member[]
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  uuid    String @unique @default(uuid())
+  ipAddress      String
+  browser String
+
+  sessionToken String   @unique
+  userUUID     String
+  expires      DateTime
+
+  user User @relation(fields: [userUUID], references: [uuid])
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
